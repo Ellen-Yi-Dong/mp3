@@ -14,5 +14,3 @@ library(sf)
 library(leaflet)
 library(ggplot2)
 ```
-
-
