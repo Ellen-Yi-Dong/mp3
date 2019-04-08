@@ -1,6 +1,16 @@
 ---
-title: "mp3"
-output: html_document
+title: "Mini-Project 3"
+output: 
+  html_document:
+    code_folding: hide
 ---
 
-Hello!
+```{r message = FALSE, echo = FALSE, warning = FALSE}
+#Opening Libraries
+
+library(tidyverse)
+library(macleish)
+library(sf)
+library(leaflet)
+library(ggplot2)
+```
