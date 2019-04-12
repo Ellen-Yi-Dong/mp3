@@ -16,8 +16,24 @@ library(ggplot2)
 ```
 
 ```{r message = FALSE, warning = FALSE}
-leaflet() %>%
+#Map with Contours (for reference)
+
+macleish_map <- leaflet() %>%
   addTiles() %>%
   addPolylines(data = pluck(macleish_layers, "contours_3m"), weight = 2) %>%
   addPolylines(data = pluck(macleish_layers, "contours_30ft"), weight = 2, color = "red")
+```
+
+```{r}
+#Isolating "trails" and layer
+
+macleish_trails <- pluck(macleish_layers[["trails"]])
+```
+
+```{r}
+#Making leaflet trails map
+
+trails_map <- leaflet() %>%
+  addTiles() %>%
+  addPolylines(data = macleish_trails, weight = 1, color = "black")
 ```
