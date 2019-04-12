@@ -16,7 +16,6 @@ library(ggplot2)
 ```
 
 ```{r message = FALSE, warning = FALSE}
-<<<<<<< HEAD
 #Map with Contours (for reference)
 
 macleish_map <- leaflet() %>%
@@ -38,3 +37,4 @@ trails_map <- leaflet() %>%
   addTiles() %>%
   addPolylines(data = macleish_trails, weight = 1, color = "black")
 ```
+
