@@ -16,4 +16,11 @@ library(ggplot2)
 ```
 
 ```{r message = FALSE, warning = FALSE}
+<<<<<<< HEAD
+=======
+leaflet() %>%
+  addTiles() %>%
+  addPolylines(data = pluck(macleish_layers, "contours_3m"), weight = 2) %>%
+  addPolylines(data = pluck(macleish_layers, "contours_30ft"), weight = 2, color = "red")
+>>>>>>> f5e0b39cba7bb378f36a498f69b3f2acf9c836e9
 ```
