@@ -31,7 +31,7 @@ macleish_trails <- pluck(macleish_layers[["trails"]])
 ```
 
 ```{r}
-#Making leaflet trails map
+#Making leaflet trails Map
 
 trails_map <- leaflet() %>%
   addTiles() %>%
