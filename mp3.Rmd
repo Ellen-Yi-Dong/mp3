@@ -16,5 +16,4 @@ library(ggplot2)
 ```
 
 ```{r message = FALSE, warning = FALSE}
-
 ```
