@@ -27,7 +27,7 @@ macleish_map
 ```
 
 ```{r}
-#Isolating "trails" and Layer
+#Isolating "trails" Layer
 
 macleish_trails <- pluck(macleish_layers[["trails"]])
 ```
@@ -36,8 +36,6 @@ macleish_trails <- pluck(macleish_layers[["trails"]])
 #cleaning up the macleish trails Table 
 macleish_trails2 <- macleish_trails %>%
   st_join(macleish_layers$contours_3m)
-
-
 
 
 ```
