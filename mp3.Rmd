@@ -52,8 +52,3 @@ trails_map <- leaflet() %>%
 
 trails_map
 ```
-
-
-trails_map
-```
-
