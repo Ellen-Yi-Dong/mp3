@@ -48,5 +48,12 @@ trails_map <- leaflet() %>%
   addPolylines(data = macleish_trails, weight = 1, color = "black")
 
 
+
+
 trails_map
 ```
+
+
+trails_map
+```
+
