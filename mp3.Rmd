@@ -27,13 +27,13 @@ macleish_map
 ```
 
 ```{r}
-#Isolating "trails" and layer
+#Isolating "trails" and Layer
 
 macleish_trails <- pluck(macleish_layers[["trails"]])
 ```
 
 ```{r}
-#cleaning up the macleish trails table 
+#cleaning up the macleish trails Table 
 macleish_trails2 <- macleish_trails %>%
   st_join(macleish_layers$contours_3m)
 
@@ -47,7 +47,6 @@ macleish_trails2 <- macleish_trails %>%
 
 trails_map <- leaflet() %>%
   addTiles() %>%
-  filter()
   addPolylines(data = macleish_trails, weight = 1, color = "black")
 
 
