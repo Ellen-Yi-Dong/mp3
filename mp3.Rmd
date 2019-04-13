@@ -28,17 +28,18 @@ macleish_map
 ```
 
 ```{r}
-#Isolating "trails" and layer
+#Isolating "trails" Layer
 
 macleish_trails <- pluck(macleish_layers[["trails"]])
 ```
 A 
 ```{r}
-#cleaning up the macleish trails table 
+#cleaning up the macleish trails Table 
 macleish_trails2 <- macleish_trails %>%
   st_join(macleish_layers$contours_3m)
 
 ```
+
 
 
 Finding the elevation of each trail 
@@ -75,7 +76,6 @@ entry_trail <-macleish_trails2 %>%
   
 ```
 
-
   
 
 ```{r}
@@ -88,6 +88,11 @@ trails_map <- leaflet() %>%
 
 
 
+
+
+
 trails_map
 ```
+
+
 
