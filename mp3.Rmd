@@ -16,10 +16,7 @@ library(ggplot2)
 ```
 
 ```{r message = FALSE, warning = FALSE}
-<<<<<<< HEAD
 
-=======
->>>>>>> bc4b5a3ac3d4f0109a64fe412642bccec559ffce
 #Map with Contours (for reference)
 
 macleish_map <- leaflet() %>%
@@ -35,30 +32,62 @@ macleish_map
 
 macleish_trails <- pluck(macleish_layers[["trails"]])
 ```
-
+A 
 ```{r}
 #cleaning up the macleish trails table 
 macleish_trails2 <- macleish_trails %>%
   st_join(macleish_layers$contours_3m)
 
-
-
-
 ```
+
+
+Finding the elevation of each trail 
+```{r}
+porc_trail <- macleish_trails2 %>%
+  filter(name == "Porcupine Trail") %>%
+  select(name, ELEV_FT,Shape_Leng, geometry) %>%
+  mutate(avg_elev = mean(ELEV_FT, na.rm = TRUE)) 
+
+western_loop <- macleish_trails2 %>%
+  filter(name == "Western Loop") %>%
+  select(name, ELEV_FT,Shape_Leng, geometry) %>%
+  mutate(avg_elev = mean(ELEV_FT, na.rm = TRUE))
+
+poplar_hill <- macleish_trails2 %>%
+  filter(name == "Poplar Hill Road") %>%
+  select(name, ELEV_FT,Shape_Leng, geometry) %>%
+  mutate(avg_elev = mean(ELEV_FT, na.rm = TRUE))
+
+vernal_loop <- macleish_trails2 %>%
+  filter(name == "Vernal Pool Loop") %>%
+  select(name, ELEV_FT,Shape_Leng, geometry) %>%
+  mutate(avg_elev = mean(ELEV_FT, na.rm = TRUE))
+
+eastern_loop <- macleish_trails2 %>%
+  filter(name == "Vernal Pool Loop") %>%
+  select(name, ELEV_FT,Shape_Leng, geometry) %>%
+  mutate(avg_elev = mean(ELEV_FT, na.rm = TRUE))
+
+entry_trail <-macleish_trails2 %>%
+  filter(name == "Vernal Pool Loop") %>%
+  select(name, ELEV_FT,Shape_Leng, geometry) %>%
+  mutate(avg_elev = mean(ELEV_FT, na.rm = TRUE))
+  
+```
+
+
+  
 
 ```{r}
 #Making leaflet trails Map
 
 trails_map <- leaflet() %>%
   addTiles() %>%
-  filter()
-  addPolylines(data = macleish_trails, weight = 1, color = "black")
-<<<<<<< HEAD
+  addPolylines(data = macleish_trails2, weight = 1, color = "black") %>%
+  addPolylines(data = pluck(macleish_layers, "contours_3m"), weight = 1, color = "red")
+
 
 
 trails_map
 ```
-=======
-```
 
->>>>>>> bc4b5a3ac3d4f0109a64fe412642bccec559ffce
