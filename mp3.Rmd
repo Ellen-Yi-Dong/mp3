@@ -13,6 +13,7 @@ library(macleish)
 library(sf)
 library(leaflet)
 library(ggplot2)
+library(rgdal)
 ```
 
 ```{r message = FALSE, warning = FALSE}
@@ -97,7 +98,12 @@ trails_map <- leaflet() %>%
   addPolylines(data = poplar_hill, weight = 2, color = "blue") %>%
   addPolylines(data = vernal_loop, weight = 2, color = "green") %>%
   addPolylines(data = eastern_loop, weight = 2, color = "blue") %>%
-  addPolylines(data = entry_trail, weight = 2, color = "green")
+  addPolylines(data = entry_trail, weight = 2, color = "green") %>%
+  addLegend("bottomright", 
+            title = "Trail Difficulty",
+            colors = c("green", "blue", "black"),  
+            labels = c("Easy", "Moderate", "Difficult"), 
+            opacity = 1)
 
 
 
