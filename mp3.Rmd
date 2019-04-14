@@ -16,6 +16,7 @@ library(ggplot2)
 ```
 
 ```{r message = FALSE, warning = FALSE}
+
 #Map with Contours (for reference)
 
 macleish_map <- leaflet() %>%
@@ -37,7 +38,44 @@ macleish_trails <- pluck(macleish_layers[["trails"]])
 macleish_trails2 <- macleish_trails %>%
   st_join(macleish_layers$contours_3m)
 
+```
 
+
+
+ 
+```{r}
+#Finding the average elevation of each trail
+
+porc_trail <- macleish_trails2 %>%
+  filter(name == "Porcupine Trail") %>%
+  select(name, ELEV_FT,Shape_Leng, geometry) %>%
+  mutate(avg_elev = mean(ELEV_FT, na.rm = TRUE)) 
+
+western_loop <- macleish_trails2 %>%
+  filter(name == "Western Loop") %>%
+  select(name, ELEV_FT,Shape_Leng, geometry) %>%
+  mutate(avg_elev = mean(ELEV_FT, na.rm = TRUE))
+
+poplar_hill <- macleish_trails2 %>%
+  filter(name == "Poplar Hill Road") %>%
+  select(name, ELEV_FT,Shape_Leng, geometry) %>%
+  mutate(avg_elev = mean(ELEV_FT, na.rm = TRUE))
+
+vernal_loop <- macleish_trails2 %>%
+  filter(name == "Vernal Pool Loop") %>%
+  select(name, ELEV_FT,Shape_Leng, geometry) %>%
+  mutate(avg_elev = mean(ELEV_FT, na.rm = TRUE))
+
+eastern_loop <- macleish_trails2 %>%
+  filter(name == "Vernal Pool Loop") %>%
+  select(name, ELEV_FT,Shape_Leng, geometry) %>%
+  mutate(avg_elev = mean(ELEV_FT, na.rm = TRUE))
+
+entry_trail <-macleish_trails2 %>%
+  filter(name == "Vernal Pool Loop") %>%
+  select(name, ELEV_FT,Shape_Leng, geometry) %>%
+  mutate(avg_elev = mean(ELEV_FT, na.rm = TRUE))
+  
 ```
 
 ```{r}
@@ -45,8 +83,8 @@ macleish_trails2 <- macleish_trails %>%
 
 trails_map <- leaflet() %>%
   addTiles() %>%
-  addPolylines(data = macleish_trails, weight = 1, color = "black")
-
+  addPolylines(data = pluck(macleish_layers, "contours_3m"), weight = 0.5, color = "red") %>%
+  addPolylines(data = porc_trail, weight = 1, color = "black")
 
 
 
