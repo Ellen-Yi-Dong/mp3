@@ -54,33 +54,32 @@ western_loop <- macleish_trails2 %>%
   filter(name == "Western Loop") %>%
   select(name, ELEV_FT,Shape_Leng, geometry) %>%
   mutate(elev_gain = max(ELEV_FT) - min(ELEV_FT)) %>%
-  mutate(N_SL = Shape_Leng /1609.344) %>%
-  mutate(classification = sqrt((elev_gain * N_SL) *2))
+  mutate(classification = sqrt((elev_gain * Shape_Leng) *2))
 
 poplar_hill <- macleish_trails2 %>%
   filter(name == "Poplar Hill Road") %>%
   select(name, ELEV_FT,Shape_Leng, geometry) %>%
   mutate(elev_gain = max(ELEV_FT) - min(ELEV_FT)) %>%
-  mutate(classification = sqrt((elev_gain * Shape_Leng) *2)/ 1609.344)
+  mutate(classification = sqrt((elev_gain * Shape_Leng) *2))
 
 vernal_loop <- macleish_trails2 %>%
   filter(name == "Vernal Pool Loop") %>%
   select(name, ELEV_FT,Shape_Leng, geometry) %>%
   mutate(elev_gain = max(ELEV_FT) - min(ELEV_FT)) %>%
-  mutate(classification = sqrt((elev_gain * Shape_Leng) *2)/ 1609.344)
+  mutate(classification = sqrt((elev_gain * Shape_Leng) *2))
 
 
 eastern_loop <- macleish_trails2 %>%
   filter(name == "Eastern Loop") %>%
   select(name, ELEV_FT,Shape_Leng, geometry) %>%
   mutate(elev_gain = max(ELEV_FT) - min(ELEV_FT)) %>%
-  mutate(classification = sqrt((elev_gain * Shape_Leng) *2) / 1609.344)
+  mutate(classification = sqrt((elev_gain * Shape_Leng) *2))
 
 entry_trail <-macleish_trails2 %>%
   filter(name == "entry trail") %>%
   select(name, ELEV_FT,Shape_Leng, geometry)  %>%
   mutate(elev_gain = max(ELEV_FT) - min(ELEV_FT)) %>%
-  mutate(classification = sqrt((elev_gain * Shape_Leng) *2) / 1609.344)
+  mutate(classification = sqrt((elev_gain * Shape_Leng) *2))
   
   
 ```
