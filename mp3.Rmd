@@ -90,11 +90,11 @@ entry_trail <-macleish_trails2 %>%
 
 trails_map <- leaflet() %>%
   addTiles() %>%
-  addPolylines(data = pluck(macleish_layers, "contours_3m"), weight = 1, color = "red") %>%
-  addPolylines(data = porc_trail, weight = 2, color = "black") %>%
-  addPolylines(data = western_loop, weight = 2, color = "blue") %>%
-  addPolylines(data = poplar_hill, weight = 2, color = "green") %>%
-  addPolylines(data = vernal_loop, weight = 2, color = "black") %>%
+  #addPolylines(data = pluck(macleish_layers, "contours_3m"), weight = 1, color = "red") %>%
+  addPolylines(data = porc_trail, weight = 2, color = "blue") %>%
+  addPolylines(data = western_loop, weight = 2, color = "black") %>%
+  addPolylines(data = poplar_hill, weight = 2, color = "blue") %>%
+  addPolylines(data = vernal_loop, weight = 2, color = "green") %>%
   addPolylines(data = eastern_loop, weight = 2, color = "blue") %>%
   addPolylines(data = entry_trail, weight = 2, color = "green")
 
