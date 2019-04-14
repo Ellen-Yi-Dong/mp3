@@ -82,7 +82,6 @@ entry_trail <-macleish_trails2 %>%
   select(name, ELEV_FT,Shape_Leng, geometry)  %>%
   mutate(elev_gain = max(ELEV_FT) - min(ELEV_FT)) %>%
   mutate(classification = sqrt((elev_gain * Shape_Leng) *2))
-  
 ```
 
 ```{r}
