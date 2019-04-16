@@ -25,7 +25,6 @@ library(dplyr)
 
 macleish_map <- leaflet() %>%
   addTiles() %>%
-  addMarkers(~lat, ~lon)
   addPolylines(data = pluck(macleish_layers, "contours_3m"), weight = 2) %>%
   addPolylines(data = pluck(macleish_layers, "contours_30ft"), weight = 2, color = "red")
 
@@ -121,7 +120,6 @@ western_pts <- western %>%
   addTiles() %>%
   addMarkers(data = st_cast(x, "POINT"), popup = ~name)
  
- markers_map
 
 ```
 
@@ -204,12 +202,7 @@ entry_trail2 <-entry_trail %>%
 
 ```
 
-```{r}
-eastern_loop2 %>% st_join(entry_trail2) %>%
-  st_join(eastern_loop2) %>%
-  st_join(vernal_loop2) %>%
-  
-```
+
 
 
 
