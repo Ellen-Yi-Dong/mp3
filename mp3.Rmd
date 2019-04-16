@@ -120,6 +120,8 @@ western_pts <- western %>%
  markers_map <- leaflet() %>%
   addTiles() %>%
   addMarkers(data = st_cast(x, "POINT"), popup = ~name)
+ 
+ markers_map
 
 ```
 
@@ -147,12 +149,14 @@ trails_map <- leaflet() %>%
   addPolylines(data = vernal_loop, weight = 2, color = "green") %>%
   addPolylines(data = eastern_loop, weight = 2, color = "blue") %>%
   addPolylines(data = entry_trail, weight = 2, color = "green") %>%
-  addMarkers(data = porc_trail, popup = ~point) %>%
   addLegend("bottomright", 
             title = "Trail Difficulty",
             colors = c("green", "blue", "black"),  
             labels = c("Easy", "Moderate", "Difficult"), 
             opacity = 1) 
+
+trails_map
+
 ```
 
 
