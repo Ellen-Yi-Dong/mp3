@@ -15,6 +15,7 @@ library(proj4)
 library(leaflet)
 library(ggplot2)
 library(rgdal)
+library(dplyr)
 ```
 
 ```{r message = FALSE, warning = FALSE}
@@ -23,6 +24,7 @@ library(rgdal)
 
 macleish_map <- leaflet() %>%
   addTiles() %>%
+  addMarkers(~lat, ~lon)
   addPolylines(data = pluck(macleish_layers, "contours_3m"), weight = 2) %>%
   addPolylines(data = pluck(macleish_layers, "contours_30ft"), weight = 2, color = "red")
 
@@ -30,11 +32,11 @@ macleish_map
 ```
 
 ```{r}
-#Isolating "trails" Layer
+#Isolating the "trails" Layer
 
 macleish_trails <- pluck(macleish_layers[["trails"]])
 ```
-A 
+
 ```{r}
 #cleaning up the macleish trails Table 
 macleish_trails2 <- macleish_trails %>%
@@ -43,10 +45,9 @@ macleish_trails2 <- macleish_trails %>%
 ```
   
 
-
-
-Finding the elevation of each trail 
 ```{r}
+#Finding the average elevation of each trail
+
 porc_trail <- macleish_trails2 %>%
   filter(name == "Porcupine Trail") %>%
   select(name, ELEV_FT, Shape_Leng, geometry) %>%
@@ -100,11 +101,44 @@ entry_trail <-macleish_trails2 %>%
 
 
 
+
+```{r}
+#Making new trails dataset to add markers to map
+
+x <- st_intersection(
+  pluck(macleish_layers, "trails"), 
+  pluck(macleish_layers, "contours_30ft")
+)
+
+western <- filter(x, name == "Western Loop")
+
+western_pts <- western %>% 
+  st_cast("MULTIPOINT") %>% 
+  st_cast("POINT")
+
+ markers_map <- leaflet() %>%
+  addTiles() %>%
+  addMarkers(data = st_cast(x, "POINT"), popup = ~name)
+
+```
+
+```{r}
+#Wrangling data to put markers on leaflet trails map
+
+trail_markers <- st_intersection(
+  pluck(macleish_layers, "trails"), 
+  pluck(macleish_layers, "contours_30ft")
+) %>%
+  drop_na()
+```
+
+
 ```{r}
 #Making leaflet trails Map
 
 trails_map <- leaflet() %>%
   addTiles() %>%
+  addMarkers(data = st_cast(trail_markers, "POINT"), popup = ~name) %>%
   #addPolylines(data = pluck(macleish_layers, "contours_3m"), weight = 1, color = "red") %>%
   addPolylines(data = porc_trail, weight = 2, color = "blue") %>%
   addPolylines(data = western_loop, weight = 2, color = "black") %>%
@@ -117,12 +151,5 @@ trails_map <- leaflet() %>%
             title = "Trail Difficulty",
             colors = c("green", "blue", "black"),  
             labels = c("Easy", "Moderate", "Difficult"), 
-            opacity = 1)
-
-
-
-trails_map
+            opacity = 1) 
 ```
-
-
-
