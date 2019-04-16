@@ -133,3 +133,4 @@ trails_map <- leaflet() %>%
             labels = c("Easy", "Moderate", "Difficult"), 
             opacity = 1) 
 ```
+
