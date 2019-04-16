@@ -155,10 +155,6 @@ trails_map <- leaflet() %>%
             opacity = 1) 
 ```
 
-<<<<<<< HEAD
-
-
-
 
 
 ```{r}
@@ -215,5 +211,3 @@ eastern_loop2 %>% st_join(entry_trail2) %>%
 
 
 
-=======
->>>>>>> eda47fb32cca5143908ce43f64bd686f4124e944
