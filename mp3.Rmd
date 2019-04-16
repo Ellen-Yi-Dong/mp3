@@ -155,3 +155,65 @@ trails_map <- leaflet() %>%
             opacity = 1) 
 ```
 
+<<<<<<< HEAD
+
+
+
+
+
+```{r}
+#trying to get the graph created 
+
+porc_trail2 <- porc_trail %>%
+  select(name, Shape_Leng, ELEV_FT) %>%
+  filter(name == "Porcupine Trail") %>%
+  summarize(mean_elev = mean(ELEV_FT, na.rm = TRUE)) %>%
+  mutate(name = "Porcupine Trail")
+
+western_loop2 <- western_loop %>%
+   select(name, Shape_Leng, ELEV_FT) %>%
+   summarize(mean_elev = mean(ELEV_FT, na.rm = TRUE)) %>%
+   mutate(name = "Western Loop") 
+
+poplar_hill2 <- poplar_hill %>%
+   select(name, Shape_Leng, ELEV_FT) %>%
+   summarize(mean_elev = mean(ELEV_FT, na.rm = TRUE)) %>%
+   mutate(name = "Poplar Hill Road") 
+
+
+vernal_loop2 <-  vernal_loop %>%
+  select(name, Shape_Leng, ELEV_FT) %>%
+  summarize(mean_elev = mean(ELEV_FT, na.rm = TRUE)) %>%
+  mutate(name = "Vernal Pool Loop") 
+
+
+
+eastern_loop2 <- eastern_loop %>%
+   select(name, Shape_Leng, ELEV_FT) %>%
+   summarize(mean_elev = mean(ELEV_FT, na.rm = TRUE)) %>%
+   mutate(name = "Eastern Loop") 
+
+
+entry_trail2 <-entry_trail %>%
+  select(name, Shape_Leng, ELEV_FT) %>%
+  summarize(mean_elev = mean(ELEV_FT, na.rm = TRUE)) %>%
+  mutate(name = "Entry Trail") 
+
+```
+
+```{r}
+eastern_loop2 %>% st_join(entry_trail2) %>%
+  st_join(eastern_loop2) %>%
+  st_join(vernal_loop2) %>%
+  
+```
+
+
+
+
+
+
+
+
+=======
+>>>>>>> eda47fb32cca5143908ce43f64bd686f4124e944
