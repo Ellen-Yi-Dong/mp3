@@ -159,9 +159,6 @@ trails_map
 
 
 
-
-
-
 ```{r}
 #trying to get the graph created 
 
