@@ -208,7 +208,7 @@ trails_map
 
 ```
 
-```{r}
+```{r warning = FALSE, echo= FALSE, message = FALSE}
 #Wrangling the data for the elevation profile
 
 macleish_trails3 <- macleish_trails2 %>%
@@ -216,9 +216,6 @@ macleish_trails3 <- macleish_trails2 %>%
   group_by(name) %>%
   summarise(ave_elevation = mean(ELEV_FT))
   
-```
-
-```{r}
 macleish_trails4 <- macleish_trails2 %>%
   select(name, SHAPE_LEN) 
 
@@ -226,23 +223,24 @@ trail5 <- as.data.frame(macleish_trails4) %>%
   select(name, SHAPE_LEN) %>%
   group_by(name) %>%
   summarise(average_lenght=mean(SHAPE_LEN))
-```
 
-```{r}
+
 trail3 <- as.data.frame(macleish_trails3) %>% 
   select(name, ave_elevation)
 ```
 
-```{r}
+```{r warning = FALSE, message = FALSE, echo= FALSE}
+#joining the tables together by name to create the ultimate table to grpah 
 joined_trails <- left_join(trail3, trail5, by = "name")
 
 ```
 
-```{r}
+```{r warning = FALSE, message = FALSE, echo = FALSE}
+#removing the trails that aren't needed
 joined_trails_final <- joined_trails[-c(1, 3, 7),]
 ```
 
-```{r}
+```{r warning = FALSE, message = FALSE, echo = FALSE}
 #creating the elevation profile
 Elevation_profile <- ggplot(joined_trails_final, aes(x = average_lenght, y = ave_elevation)) +
   geom_point() + 
