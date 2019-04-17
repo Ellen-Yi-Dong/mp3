@@ -1,13 +1,48 @@
 ---
-title: "Mini-Project 3"
+title: "Trailblazer's of Macleish"
+author: Ellen Yi Dong, Christina Hung, Harriet Brookes-Gray
 output: 
   html_document:
     code_folding: hide
 ---
 
+**Problem statement**I
+
+Macleish has approximately four miles of built, but unclassified, trails for use by field station visitors. In order to make the trails more accessible for these visitors, Macleish requires a simple trail classification system. Such a system of classification will optimize the use of the trails that Macleish has to offer. Thus, the aim of this project is to develop an accurate classification system for Macleish trails. 
+
+Our first step to develop a trail difficulty classification system for Macleish was to research how hiking trail difficulty is calculated. There is no consistent method across the board. We chose the Shenandoah Hiking Difficulty formula as our method as this appeared  to be the most appropriate given the Macleish trail data we had. The Macleish data included information on the elevation of the trails (in feet and metres) and the length of the trails in metres. This information is the only information that is required by Shenandoah’s method, making it the most applicable for our investigation. The Shenandoah Hiking difficulty formula is given by: 
+
+$Shenandoah rating = \sqrt(elevation gain*2*distance (miles))$
+
+We used the “Macleish trails” and “contours 30ft” layers to extract data on elevation gain and trail distance. Considering the units of elevation gain in Shenandoah’s calculation was not given, we calculated elevation gain in feet by subtracting the minimum elevation from the maximum elevation. We chose to use feet rather than metres as the measurement of feet gave us smaller measurement intervals, and thus a more precise estimate of elevation. Unlike Shenandoah's formula we kept distance in metres rather than convert to miles since the Macleish trails are not longer than 6 miles. We drew from Shenandoah’s formula in our calculations for each of the six trails and found that our values fell in the ranges of 400-500, 900-1200 and 1200-1300. We used the values of the elevation gain associated with each trail to in order to organize these intervals. Between the three intervals are the largest jumps in elevation gain. Considering our classification values and elevation gain values, we chose to use these three intervals as our bounds for classifying the trails into easy, moderate and difficult. Thus, the trail classification goes as follows (the classification value is in brackets):
+
+**Easy:**
+
+Entry trail (479)
+
+Vernal trail (486)
+
+**Moderate:** 
+East trail (965)
+
+Porcupine trail (1075)
+
+Poplar trail (1133)
+
+**Hard:**
+
+Western trail (1275)
+
+Given that we have found a system to classify the Macleish trails we suggest that Macleish use the trail classification system to create a map with classified trails such as the map we have created. With this map we recommend three actions that can be taken from our findings:
+Upload this map to Smith’s website and Macleish’s page for easy access to the public
+Create hard-copy maps that visitors to Macleish can pick up at the entrance
+Create an interactive app that contains the map with the trail classification and elevation profiles. This app could also enable visitors to rate the trails and write reviews. This is a way in which Macleish can receive feedback and updates on the trails.
+
+We prioritize recommendations 1 and 3 as these will be the most environmentally friendly. For recommendation 1 we estimate that uploading the map onto the website can be done in under a month at a cost of  approximately $100 if we account for the labor hours of an intern working on putting it on the website. For option 3, we estimate that the development of an interactive app that can run on multiple software platforms will take approximately 250 hours. This includes designing the app, developing and testing the app. If we hire an someone to work 25 hours a week on the app we estimate that it will take approximately 10 weeks. The costs would entail the software required to build the app and labor of the app developer. Considering the software to build a simple app is often free and accessible online, the major cost would be labor. If we hire a Smith College student during the semester and pay a wage rate of $15 an hour it will cost $3750 to build the app. 
+
 ```{r message = FALSE, echo = FALSE, warning = FALSE}
 
-#Opening Libraries
+#Opening Libraries ----
 
 library(tidyverse)
 library(macleish)
@@ -21,89 +56,90 @@ library(dplyr)
 
 ```{r message = FALSE, warning = FALSE}
 
-#Map with Contours (for reference)
+#Map with Contours (for reference) ----
 
 macleish_map <- leaflet() %>%
   addTiles() %>%
   addPolylines(data = pluck(macleish_layers, "contours_3m"), weight = 2) %>%
   addPolylines(data = pluck(macleish_layers, "contours_30ft"), weight = 2, color = "red")
 
-macleish_map
 ```
 
-```{r}
-#Isolating the "trails" Layer
-
+```{r, message = FALSE, warning = FALSE}
+#Isolating the "trails" Layer ----
 macleish_trails <- pluck(macleish_layers[["trails"]])
+
 ```
 
-```{r}
-#cleaning up the macleish trails Table 
+```{r, message = FALSE, warning = FALSE}
+#cleaning up the macleish trails Table ----
 macleish_trails2 <- macleish_trails %>%
   st_join(macleish_layers$contours_3m)
 
 ```
-  
 
-```{r}
-#Finding the average elevation of each trail
+
+```{r, message = FALSE, warning = FALSE}
+#Finding the average elevation of each trail ----
 
 porc_trail <- macleish_trails2 %>%
   filter(name == "Porcupine Trail") %>%
-  select(name, ELEV_FT, Shape_Leng, geometry) %>%
+  select(name, ELEV_FT, SHAPE_LEN, geometry) %>%
   mutate(elev_gain = max(ELEV_FT) - min(ELEV_FT)) %>%
-  mutate(classification = sqrt((elev_gain * Shape_Leng) *2)) %>%
+  mutate(avg_shape_len = mean(SHAPE_LEN)) %>%
+  mutate(classification = sqrt((elev_gain * avg_shape_len) *2)) %>%
   st_transform(4326)
 
 western_loop <- macleish_trails2 %>%
   filter(name == "Western Loop") %>%
-  select(name, ELEV_FT,Shape_Leng, geometry) %>%
+  select(name, ELEV_FT,SHAPE_LEN, geometry) %>%
   mutate(elev_gain = max(ELEV_FT) - min(ELEV_FT)) %>%
-  mutate(classification = sqrt((elev_gain * Shape_Leng) *2)) %>%
+  mutate(avg_shape_len = mean(SHAPE_LEN)) %>%
+  mutate(classification = sqrt((elev_gain * avg_shape_len) *2)) %>%
   st_transform(4326)
 
 
 poplar_hill <- macleish_trails2 %>%
   filter(name == "Poplar Hill Road") %>%
-  select(name, ELEV_FT,Shape_Leng, geometry) %>%
+  select(name, ELEV_FT,SHAPE_LEN, geometry) %>%
   mutate(elev_gain = max(ELEV_FT) - min(ELEV_FT)) %>%
-  mutate(classification = sqrt((elev_gain * Shape_Leng) *2)) %>%
+  mutate(avg_shape_len = mean(SHAPE_LEN)) %>%
+  mutate(classification = sqrt((elev_gain * avg_shape_len) *2)) %>%
   st_transform(4326)
 
 
 vernal_loop <- macleish_trails2 %>%
   filter(name == "Vernal Pool Loop") %>%
-  select(name, ELEV_FT,Shape_Leng, geometry) %>%
+  select(name, ELEV_FT,SHAPE_LEN, geometry) %>%
   mutate(elev_gain = max(ELEV_FT) - min(ELEV_FT)) %>%
-  mutate(classification = sqrt((elev_gain * Shape_Leng) *2)) %>%
+  mutate(avg_shape_len = mean(SHAPE_LEN)) %>%
+  mutate(classification = sqrt((elev_gain * avg_shape_len) *2)) %>%
   st_transform(4326)
-
 
 
 eastern_loop <- macleish_trails2 %>%
   filter(name == "Eastern Loop") %>%
-  select(name, ELEV_FT,Shape_Leng, geometry) %>%
+  select(name, ELEV_FT,SHAPE_LEN, geometry) %>%
   mutate(elev_gain = max(ELEV_FT) - min(ELEV_FT)) %>%
-  mutate(classification = sqrt((elev_gain * Shape_Leng) *2)) %>%
+  mutate(avg_shape_len = mean(SHAPE_LEN)) %>%
+  mutate(classification = sqrt((elev_gain * avg_shape_len) *2)) %>%
   st_transform(4326)
 
 
 entry_trail <-macleish_trails2 %>%
   filter(name == "entry trail") %>%
-  select(name, ELEV_FT,Shape_Leng, geometry)  %>%
+  select(name, ELEV_FT,SHAPE_LEN, geometry)  %>%
   mutate(elev_gain = max(ELEV_FT) - min(ELEV_FT)) %>%
-  mutate(classification = sqrt((elev_gain * Shape_Leng) *2)) %>%
+  mutate(avg_shape_len = mean(SHAPE_LEN)) %>%
+  mutate(classification = sqrt((elev_gain * avg_shape_len) *2)) %>%
   st_transform(4326)
-
 
   
 ```
 
 
-
-
-```{r}
-#Making new trails dataset to add markers to map
+```{r, message = FALSE, warning = FALSE}
+#Making new trails dataset to add markers to map ----
 
 x <- st_intersection(
   pluck(macleish_layers, "trails"), 
@@ -123,8 +159,8 @@ western_pts <- western %>%
 
 ```
 
-```{r}
-#Wrangling data to put markers on leaflet trails map
+```{r, message = FALSE, warning = FALSE}
+#Wrangling data to put markers on leaflet trails map ----
 
 trail_markers <- st_intersection(
   pluck(macleish_layers, "trails"), 
@@ -133,13 +169,18 @@ trail_markers <- st_intersection(
   drop_na()
 ```
 
+```{r, message = FALSE, warning = FALSE}
+# Removing the repeats of trail markers ----
+trail_markers_distinct <- trail_markers[-c(3,4, 6, 9, 10, 8, 12, 13, 14),]
+```
 
-```{r}
-#Making leaflet trails Map
+```{r, message = FALSE, warning = FALSE}
+#Making leaflet trails Map ----
 
 trails_map <- leaflet() %>%
   addTiles() %>%
-  addMarkers(data = st_cast(trail_markers, "POINT"), popup = ~name) %>%
+  addMarkers(data = st_cast(trail_markers_distinct, "POINT"), popup = ~name)%>%
+  addMarkers(lng=-72.6795441132562, lat=42.4489509894551, label = "Entry trail") %>%
   #addPolylines(data = pluck(macleish_layers, "contours_3m"), weight = 1, color = "red") %>%
   addPolylines(data = porc_trail, weight = 2, color = "blue") %>%
   addPolylines(data = western_loop, weight = 2, color = "black") %>%
@@ -157,50 +198,53 @@ trails_map
 
 ```
 
+```{r}
+#Wrangling the data for the elevation profile
 
+macleish_trails3 <- macleish_trails2 %>%
+   select(name, ELEV_FT, SHAPE_LEN, geometry) %>%
+  group_by(name) %>%
+  summarise(ave_elevation = mean(ELEV_FT))
+  
+```
 
 ```{r}
-#trying to get the graph created 
+macleish_trails4 <- macleish_trails2 %>%
+  select(name, SHAPE_LEN) 
 
-porc_trail2 <- porc_trail %>%
-  select(name, Shape_Leng, ELEV_FT) %>%
-  filter(name == "Porcupine Trail") %>%
-  summarize(mean_elev = mean(ELEV_FT, na.rm = TRUE)) %>%
-  mutate(name = "Porcupine Trail")
+trail5 <- as.data.frame(macleish_trails4) %>% 
+  select(name, SHAPE_LEN) %>%
+  group_by(name) %>%
+  summarise(average_lenght=mean(SHAPE_LEN))
+```
 
-western_loop2 <- western_loop %>%
-   select(name, Shape_Leng, ELEV_FT) %>%
-   summarize(mean_elev = mean(ELEV_FT, na.rm = TRUE)) %>%
-   mutate(name = "Western Loop") 
+```{r}
+trail3 <- as.data.frame(macleish_trails3) %>% 
+  select(name, ave_elevation)
+```
 
-poplar_hill2 <- poplar_hill %>%
-   select(name, Shape_Leng, ELEV_FT) %>%
-   summarize(mean_elev = mean(ELEV_FT, na.rm = TRUE)) %>%
-   mutate(name = "Poplar Hill Road") 
-
-
-vernal_loop2 <-  vernal_loop %>%
-  select(name, Shape_Leng, ELEV_FT) %>%
-  summarize(mean_elev = mean(ELEV_FT, na.rm = TRUE)) %>%
-  mutate(name = "Vernal Pool Loop") 
-
-
-
-eastern_loop2 <- eastern_loop %>%
-   select(name, Shape_Leng, ELEV_FT) %>%
-   summarize(mean_elev = mean(ELEV_FT, na.rm = TRUE)) %>%
-   mutate(name = "Eastern Loop") 
-
-
-entry_trail2 <-entry_trail %>%
-  select(name, Shape_Leng, ELEV_FT) %>%
-  summarize(mean_elev = mean(ELEV_FT, na.rm = TRUE)) %>%
-  mutate(name = "Entry Trail") 
+```{r}
+joined_trails <- left_join(trail3, trail5, by = "name")
 
 ```
 
+```{r}
+joined_trails_final <- joined_trails[-c(1, 3, 7),]
+```
+
+```{r}
+#creating the elevation profile
+Elevation_profile <- ggplot(joined_trails_final, aes(x = average_lenght, y = ave_elevation)) +
+  geom_point() + 
+  geom_smooth() + 
+  labs(x = "Average Length", 
+         y = "Average Elevation", 
+         title = "Change of Elevation with Length of Trail") + 
+  geom_label(aes(label = name))
 
 
+Elevation_profile
+```
 
 
 
