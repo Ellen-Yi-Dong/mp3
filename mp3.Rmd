@@ -16,7 +16,11 @@ Our first step to develop a trail difficulty classification system for Macleish 
 
 $Shenandoah rating = \sqrt(elevation gain*2*distance (miles))$
 
+
 We used the “Macleish trails” and “contours 30ft” layers to extract data on elevation gain and trail distance. Considering the units of elevation gain in Shenandoah’s calculation was not given, we calculated elevation gain in feet by subtracting the minimum elevation from the maximum elevation. We chose to use feet rather than metres as the measurement of feet gave us smaller measurement intervals, and thus a more precise estimate of elevation gain. Unlike Shenandoah's formula we kept distance in metres rather than convert to miles since the Macleish trails are not longer than an average length of 4 miles. We drew from Shenandoah’s formula in our calculations for each of the six trails and found that our values fell in the ranges of 200-300, 400-600 and 600 and above. We used the values of the elevation gain associated with each trail in order to organize these intervals. What distinguishes each interval is the large difference in elevation gain between the intervals. Considering our classification and elevation gain values, we chose to use these three intervals as our bounds for classifying the trails into easy, moderate and difficult. We associated each level with the colors green (easy), blue (moderate) and black (hard). We chose these colors as they are used in classifying the difficulty of [ski trails](https://everything2.com/title/Ski+trail+difficulty+classification).The trail classification goes as follows (the classification value calculated by the formula is in brackets):
+
+We used the “Macleish trails” and “contours 30ft” layers to extract data on elevation gain and trail distance. Considering the units of elevation gain in Shenandoah’s calculation was not given, we calculated elevation gain in feet by subtracting the minimum elevation from the maximum elevation. We chose to use feet rather than metres as the measurement of feet gave us smaller measurement intervals, and thus a more precise estimate of elevation gain. Unlike Shenandoah's formula we kept distance in metres rather than convert to miles since the Macleish trails are not longer than an average length of 4 miles. We drew from Shenandoah’s formula in our calculations for each of the six trails and found that our values fell in the ranges of 200-300, 400-600 and 600 and above. We used the values of the elevation gain associated with each trail in order to organize these intervals. What distinguishes each interval is the large difference in elevation gain between the intervals. Considering our classification and elevation gain values, we chose to use these three intervals as our bounds for classifying the trails into easy, moderate and difficult. We associated each level with the colors blue (easy), read (moderate) and black (hard). We chose these colors as they are used in classifying the difficulty of [ski trails](https://everything2.com/title/Ski+trail+difficulty+classification). The trail classification goes as follows (the classification value calculated by the formula is in brackets):
+
 
 **Easy:**
 
@@ -192,15 +196,15 @@ trails_map <- leaflet() %>%
   addMarkers(data = st_cast(trail_markers_distinct, "POINT"), popup = ~name)%>%
   addMarkers(lng=-72.6795441132562, lat=42.4489509894551, label = "Entry trail") %>%
   #addPolylines(data = pluck(macleish_layers, "contours_3m"), weight = 1, color = "red") %>%
-  addPolylines(data = porc_trail, weight = 2, color = "blue") %>%
+  addPolylines(data = porc_trail, weight = 2, color = "red") %>%
   addPolylines(data = western_loop, weight = 2, color = "black") %>%
-  addPolylines(data = poplar_hill, weight = 2, color = "blue") %>%
-  addPolylines(data = vernal_loop, weight = 2, color = "green") %>%
-  addPolylines(data = eastern_loop, weight = 2, color = "blue") %>%
-  addPolylines(data = entry_trail, weight = 2, color = "green") %>%
+  addPolylines(data = poplar_hill, weight = 2, color = "red") %>%
+  addPolylines(data = vernal_loop, weight = 2, color = "blue") %>%
+  addPolylines(data = eastern_loop, weight = 2, color = "red") %>%
+  addPolylines(data = entry_trail, weight = 2, color = "blue") %>%
   addLegend("bottomright", 
             title = "Trail Difficulty",
-            colors = c("green", "blue", "black"),  
+            colors = c("blue", "red", "black"),  
             labels = c("Easy", "Moderate", "Difficult"), 
             opacity = 1) 
 
