@@ -8,6 +8,13 @@ output:
 
 Github Repository ^[https://github.com/Ellen-Yi-Dong/mp3] 
 
+```{r, message=FALSE}
+# Installing word count add in ----
+devtools::install_github("benmarwick/wordcountaddin", type = "source", dependencies = TRUE)
+
+wordcountaddin::word_count("mp3.Rmd")
+```
+
 **Problem statement**
 
 *Macleish has approximately four miles of built, but unclassified, trails for use by field station visitors, thus, the aim of this project is to develop an accurate and accessible classification system of the Macleish trails.* Such a system of classification will optimize the use of the trails that Macleish has to offer. 
