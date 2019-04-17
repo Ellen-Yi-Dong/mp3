@@ -6,6 +6,8 @@ output:
     code_folding: hide
 ---
 
+Github Repository ^[https://github.com/Ellen-Yi-Dong/mp3] 
+
 **Problem statement**I
 
 Macleish has approximately four miles of built, but unclassified, trails for use by field station visitors. In order to make the trails more accessible for these visitors, Macleish requires a simple trail classification system. Such a system of classification will optimize the use of the trails that Macleish has to offer. Thus, the aim of this project is to develop an accurate classification system for Macleish trails. 
@@ -14,31 +16,39 @@ Our first step to develop a trail difficulty classification system for Macleish 
 
 $Shenandoah rating = \sqrt(elevation gain*2*distance (miles))$
 
-We used the “Macleish trails” and “contours 30ft” layers to extract data on elevation gain and trail distance. Considering the units of elevation gain in Shenandoah’s calculation was not given, we calculated elevation gain in feet by subtracting the minimum elevation from the maximum elevation. We chose to use feet rather than metres as the measurement of feet gave us smaller measurement intervals, and thus a more precise estimate of elevation. Unlike Shenandoah's formula we kept distance in metres rather than convert to miles since the Macleish trails are not longer than 6 miles. We drew from Shenandoah’s formula in our calculations for each of the six trails and found that our values fell in the ranges of 400-500, 900-1200 and 1200-1300. We used the values of the elevation gain associated with each trail to in order to organize these intervals. Between the three intervals are the largest jumps in elevation gain. Considering our classification values and elevation gain values, we chose to use these three intervals as our bounds for classifying the trails into easy, moderate and difficult. Thus, the trail classification goes as follows (the classification value is in brackets):
+We used the “Macleish trails” and “contours 30ft” layers to extract data on elevation gain and trail distance. Considering the units of elevation gain in Shenandoah’s calculation was not given, we calculated elevation gain in feet by subtracting the minimum elevation from the maximum elevation. We chose to use feet rather than metres as the measurement of feet gave us smaller measurement intervals, and thus a more precise estimate of elevation gain. Unlike Shenandoah's formula we kept distance in metres rather than convert to miles since the Macleish trails are not longer than an average length of 4 miles. We drew from Shenandoah’s formula in our calculations for each of the six trails and found that our values fell in the ranges of 200-300, 400-600 and 600 and above. We used the values of the elevation gain associated with each trail in order to organize these intervals. What distinguishes each interval is the large difference in elevation gain between the intervals. Considering our classification values and elevation gain values, we chose to use these three intervals as our bounds for classifying the trails into easy, moderate and difficult. Thus, the trail classification goes as follows (the classification value is in brackets):
 
 **Easy:**
 
-Entry trail (479)
+Entry trail (200)
 
-Vernal trail (486)
+Vernal trail (274)
 
 **Moderate:** 
-East trail (965)
+Eastern trail (466)
 
-Porcupine trail (1075)
+Poplar trail (500)
 
-Poplar trail (1133)
+Porcupine trail (531)
 
 **Hard:**
 
-Western trail (1275)
+Western trail (681)
+
+------
 
 Given that we have found a system to classify the Macleish trails we suggest that Macleish use the trail classification system to create a map with classified trails such as the map we have created. With this map we recommend three actions that can be taken from our findings:
+
+1) 
 Upload this map to Smith’s website and Macleish’s page for easy access to the public
+
+2)
 Create hard-copy maps that visitors to Macleish can pick up at the entrance
+
+3)
 Create an interactive app that contains the map with the trail classification and elevation profiles. This app could also enable visitors to rate the trails and write reviews. This is a way in which Macleish can receive feedback and updates on the trails.
 
-We prioritize recommendations 1 and 3 as these will be the most environmentally friendly. For recommendation 1 we estimate that uploading the map onto the website can be done in under a month at a cost of  approximately $100 if we account for the labor hours of an intern working on putting it on the website. For option 3, we estimate that the development of an interactive app that can run on multiple software platforms will take approximately 250 hours. This includes designing the app, developing and testing the app. If we hire an someone to work 25 hours a week on the app we estimate that it will take approximately 10 weeks. The costs would entail the software required to build the app and labor of the app developer. Considering the software to build a simple app is often free and accessible online, the major cost would be labor. If we hire a Smith College student during the semester and pay a wage rate of $15 an hour it will cost $3750 to build the app. 
+We prioritize recommendations 1 and 3 as these will be the most environmentally friendly. For recommendation 1 we estimate that uploading the map onto the website can be done in under a month at a cost of  approximately $100 if we account for the labor hours of an intern working on putting it on the website. For option 3, we estimate that the development of an interactive app that can run on multiple software platforms will takea maximum of 250 hours. This includes designing, developing and testing the app. If we hire an someone to work 25 hours a week on the app we estimate that it will take approximately 10 weeks. The costs would entail the software required to build the app and labor of the app developer. Considering the software to build a simple app is often free and accessible online, the major cost would be labor. If we hire a Smith College student during the semester and pay a wage rate of $15 an hour it will cost $3750 to build the app. 
 
 ```{r message = FALSE, echo = FALSE, warning = FALSE}
 
@@ -239,7 +249,7 @@ Elevation_profile <- ggplot(joined_trails_final, aes(x = average_lenght, y = ave
   geom_smooth() + 
   labs(x = "Average Length", 
          y = "Average Elevation", 
-         title = "Change of Elevation with Length of Trail") + 
+         title = "Elevation Profile of Macleish Trails") + 
   geom_label(aes(label = name))
 
 
