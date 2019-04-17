@@ -192,15 +192,15 @@ trails_map <- leaflet() %>%
   addMarkers(data = st_cast(trail_markers_distinct, "POINT"), popup = ~name)%>%
   addMarkers(lng=-72.6795441132562, lat=42.4489509894551, label = "Entry trail") %>%
   #addPolylines(data = pluck(macleish_layers, "contours_3m"), weight = 1, color = "red") %>%
-  addPolylines(data = porc_trail, weight = 2, color = "blue") %>%
+  addPolylines(data = porc_trail, weight = 2, color = "red") %>%
   addPolylines(data = western_loop, weight = 2, color = "black") %>%
-  addPolylines(data = poplar_hill, weight = 2, color = "blue") %>%
-  addPolylines(data = vernal_loop, weight = 2, color = "green") %>%
-  addPolylines(data = eastern_loop, weight = 2, color = "blue") %>%
-  addPolylines(data = entry_trail, weight = 2, color = "green") %>%
+  addPolylines(data = poplar_hill, weight = 2, color = "red") %>%
+  addPolylines(data = vernal_loop, weight = 2, color = "blue") %>%
+  addPolylines(data = eastern_loop, weight = 2, color = "red") %>%
+  addPolylines(data = entry_trail, weight = 2, color = "blue") %>%
   addLegend("bottomright", 
             title = "Trail Difficulty",
-            colors = c("green", "blue", "black"),  
+            colors = c("blue", "red", "black"),  
             labels = c("Easy", "Moderate", "Difficult"), 
             opacity = 1) 
 
